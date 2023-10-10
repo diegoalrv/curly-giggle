@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Obtener y Mostrar Imagen desde JSON</title>
+</head>
+<body>
+
+<img id="perro" width="750px" src="" alt="Perro piturriento">
+
+</body>
+<body>
+    <script>
+        const $perro = document.querySelector('#perro')
+    function renderperro(image_url){
+        $perro.setAttribute('src', image_url)
+    }
+    fetch('https://dog.ceo/api/breeds/image/random',{
+
+    })
+    .then(response => response.json())
+    .then(data => {renderperro(data.message)})
+    </script>
+    
+</body>
+</html>
