@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<img id="perro" width = "750px" alt = "perro pelao" src="">
+    
+        <div id="resultado"></div>
+
+        <!--JAVASCRIPT-->
+        <script>
+            const $perro = document.querySelector('#perro')
+            function ver_perrito(img_url){
+                $perro.setAttribute('src', img_url)
+
+            }
+            //DATOS POST
+            //function enviarSolicitud(){
+                //var formData = new FormData(document.getElementById('myForm'));
+
+                //fetch('http://localhost:8000/index.html', {
+                    //method: 'POST',
+                    //body: formData
+                //})
+                //.then(response => response.text())
+                //.then(data => {
+                    // Muestra la respuesta en el div con id "resultado"
+                   // document.getElementById('resultado').textContent = data;
+                ////.catch(error => console.error('Error:', error));
+            
+            //}
+            //esto lo hice yo"""
+            //<img src="tu_imagen_url_aqui" alt="Descripción de la imagen">
+            
+       
+            // Realizar la solicitud utilizando Fetch
+            function fetchPerro(){
+                fetch('https://dog.ceo/api/breeds/image/random')
+                .then(response => response.json()) // Convertir la respuesta a texto
+                .then(data => { ver_perrito(data.message) })
+                .catch(error =>console.error('Error al obtener imagen de perro',error));
+                }
+            //LLama a la funcion una vez carga la página
+            fetchPerro();
+            //Configura la actualización cada 5 segundos
+            setInterval(fetchPerro,5000);
+        
+        
+        </script>
+</html>
