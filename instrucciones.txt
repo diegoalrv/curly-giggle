@@ -1,0 +1,9 @@
+Instalar ambiente virtual
+Activar el ambiente virtual
+Usar requeriments.txt para instalar los paquetes necesarios
+Ejecutar en una terminal "uvicorn app:app --reload"
+Ejecutar en otra terminar "python randon_image_change.py"
+
+Las rutas para consultar con el server son:
+- /check_changes (get) entrega el estado si hay cambios en la imagen o No
+- /get_new_image (get) retorna la url de la nueva imagen a desplegar

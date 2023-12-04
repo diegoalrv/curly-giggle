@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Actualizar Imagen Localmente</title>
+</head>
+<body>
+
+<img id="imagen" width="750px" src="" alt="Imagen local desde el backend">
+
+<script>
+    const $imagen = document.querySelector('#imagen');
+
+    function renderImagen(image_url) {
+        $imagen.setAttribute('src', image_url);
+    }
+
+    function checkUpdate() {
+        fetch('/check_update') // Llama al endpoint para verificar si hay actualizaciones
+        .then(response => response.json())
+        .then(data => {
+            if (data.updated) {
+                updateImage();
+            }
+        })
+        .catch(error => console.error('Error al verificar actualización:', error));
+    }
+
+    function updateImage() {
+        fetch('/update_image') // Llama al endpoint para obtener la ruta de la imagen actualizada
+        .then(response => response.json())
+        .then(data => {
+            renderImagen(data.image_url); // Establece la nueva ruta de la imagen localmente
+            checkUpdate(); // Verifica nuevamente después de actualizar la imagen
+        })
+        .catch(error => console.error('Error al obtener imagen actualizada:', error));
+    }
+
+    // Llama a la función para verificar actualizaciones cada 1 segundo
+    setTimeout(checkUpdate, 1000);
+
+</script>
+    
+</body>
+</html>
