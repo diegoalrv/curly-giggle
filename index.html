@@ -8,17 +8,18 @@
 </head>
 <body>
 
-<div id="imagen-container" class="mySlides fade">
+<div id="keystoneContainer" class="keystoneContainer">
     <img id="imagen" src="https://imgs.search.brave.com/wxdL_rEuOYEH7JiljoGBDWohiOWFIKzCXgizhkEyLSM/rs:fit:860:0:0/g:ce/aHR0cHM6Ly9pbWFn/ZXMudW5zcGxhc2gu/Y29tL3Bob3RvLTE1/MjM1NjczNTMtNzFl/YTMxY2I5ZjczP3E9/ODAmdz0xMDAwJmF1/dG89Zm9ybWF0JmZp/dD1jcm9wJml4bGli/PXJiLTQuMC4zJml4/aWQ9TTN3eE1qQTNm/REI4TUh4elpXRnlZ/Mmg4TVRsOGZIQmxj/bkp2SlRJd1kyOXVK/VEl3WjJGbVlYTjha/VzU4TUh4OE1IeDhm/REE9" height="100%" width="100%">
 </div>
 <script src="maptastic.js"></script>
+<script src="gallery.js"></script>
 
 <script>
     // Definir la variable $imagen fuera de cualquier función
     const $imagen = document.getElementById('imagen');
 
     // Inicializar maptastic con el contenedor de la imagen
-    Maptastic('imagen-container');
+    Maptastic('keystoneContainer');
 
     function renderImagen(image_url) {
         // Asegurarse de que $imagen esté definida
@@ -55,6 +56,27 @@
 
     // Llama a la función para verificar actualizaciones cada 1 segundo
     setInterval(checkUpdate, 1000);
+
+    // Función para imprimir detalles de la capa
+    function imprimirDetallesCapa() {
+        if (Maptastic.layers && Maptastic.layers.length > 0) {
+            var capa = Maptastic.layers[0];
+            console.log("Detalles de la Capa:");
+            console.log("Puntos de Control (Esquinas):");
+            capa.targetPoints.forEach((punto, indice) => {
+                console.log(`Esquina ${indice + 1}: (${punto[0]}, ${punto[1]})`);
+            });
+            console.log("Ancho de la Capa:", capa.width);
+            console.log("Alto de la Capa:", capa.height);
+            console.log("ID del Elemento:", capa.element.id);
+        } else {
+            console.log("Capa no encontrada o aún no está disponible.");
+        }
+    }
+
+    // Retrasar la ejecución de imprimirDetallesCapa
+    setTimeout(imprimirDetallesCapa, 1000); // Ajusta el tiempo según sea necesario
+
 
 </script>
     

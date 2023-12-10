@@ -31,6 +31,13 @@ body {
     display: block;
 }
 
+.mySlides img {
+    width: 100%;
+    height: 100%;
+    object-fit: fill; /* Mantiene las proporciones de la imagen */
+}
+
+
 video {
     object-fit: fill;
 }
