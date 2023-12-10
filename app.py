@@ -1,6 +1,16 @@
 from fastapi import FastAPI, HTTPException
+from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI()
+
+# Configuración de CORS para permitir todos los orígenes
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # Puedes reemplazar "*" con los orígenes que deseas permitir
+    allow_credentials=True,
+    allow_methods=["*"],  # Puedes limitar los métodos HTTP permitidos (e.g., ["GET", "POST"])
+    allow_headers=["*"],  # Puedes limitar los encabezados permitidos
+)
 
 # Variable to control if there were changes in the image
 changes_occurred = False

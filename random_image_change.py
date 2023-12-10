@@ -31,4 +31,4 @@ while True:
         print("Error al consultar la API de imágenes de perros")
 
     # Esperar un tiempo aleatorio entre 0 y 15 segundos antes de la próxima consulta
-    time.sleep(random.randint(0, 30))
+    time.sleep(random.randint(0, 10))

@@ -4,23 +4,37 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Actualizar Imagen Localmente</title>
+    <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
 
-<img id="imagen" width="750px" src="" alt="Imagen local desde el backend">
+<div id="imagen-container" class="mySlides fade">
+    <img id="imagen" src="https://imgs.search.brave.com/wxdL_rEuOYEH7JiljoGBDWohiOWFIKzCXgizhkEyLSM/rs:fit:860:0:0/g:ce/aHR0cHM6Ly9pbWFn/ZXMudW5zcGxhc2gu/Y29tL3Bob3RvLTE1/MjM1NjczNTMtNzFl/YTMxY2I5ZjczP3E9/ODAmdz0xMDAwJmF1/dG89Zm9ybWF0JmZp/dD1jcm9wJml4bGli/PXJiLTQuMC4zJml4/aWQ9TTN3eE1qQTNm/REI4TUh4elpXRnlZ/Mmg4TVRsOGZIQmxj/bkp2SlRJd1kyOXVK/VEl3WjJGbVlYTjha/VzU4TUh4OE1IeDhm/REE9" height="100%" width="100%">
+</div>
+<script src="maptastic.js"></script>
 
 <script>
-    const $imagen = document.querySelector('#imagen');
+    // Definir la variable $imagen fuera de cualquier función
+    const $imagen = document.getElementById('imagen');
+
+    // Inicializar maptastic con el contenedor de la imagen
+    Maptastic('imagen-container');
 
     function renderImagen(image_url) {
-        $imagen.setAttribute('src', image_url);
+        // Asegurarse de que $imagen esté definida
+        if ($imagen) {
+            // Actualizar solo el atributo src de la imagen
+            $imagen.setAttribute('src', image_url);
+        } else {
+            console.error('Elemento imagen no encontrado');
+        }
     }
 
     function checkUpdate() {
-        fetch('/check_update') // Llama al endpoint para verificar si hay actualizaciones
+        fetch('http://localhost:9001/check_changes') // Cambia la URL al servidor en localhost:9001
         .then(response => response.json())
         .then(data => {
-            if (data.updated) {
+            if (data.changes_occurred) {
                 updateImage();
             }
         })
@@ -28,17 +42,19 @@
     }
 
     function updateImage() {
-        fetch('/update_image') // Llama al endpoint para obtener la ruta de la imagen actualizada
+        fetch('http://localhost:9001/get_new_image') // Cambia la URL al servidor en localhost:9001
         .then(response => response.json())
         .then(data => {
-            renderImagen(data.image_url); // Establece la nueva ruta de la imagen localmente
+            const timestamp = Date.now();
+            const imageUrlWithTimestamp = `${data.image_url}?timestamp=${timestamp}`;
+            renderImagen(imageUrlWithTimestamp);
             checkUpdate(); // Verifica nuevamente después de actualizar la imagen
         })
         .catch(error => console.error('Error al obtener imagen actualizada:', error));
     }
 
     // Llama a la función para verificar actualizaciones cada 1 segundo
-    setTimeout(checkUpdate, 1000);
+    setInterval(checkUpdate, 1000);
 
 </script>
     
